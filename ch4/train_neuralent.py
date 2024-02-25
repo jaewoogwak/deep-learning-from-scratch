@@ -27,6 +27,7 @@ test_acc_list = []
 iter_per_epoch = max(train_size / batch_size, 1)
 
 for i in range(iters_num):
+    print("i", i)
     # 미니배치 획득
     batch_mask = np.random.choice(train_size, batch_size)
     x_batch = x_train[batch_mask]
@@ -34,6 +35,7 @@ for i in range(iters_num):
     
     # 기울기 계산
     grad = network.numerical_gradient(x_batch, t_batch)
+    print("grad", grad)
     # grad = network.gradient(x_batch, t_batch)
     
     # 매개변수 갱신
@@ -44,6 +46,8 @@ for i in range(iters_num):
     loss = network.loss(x_batch, t_batch)
     train_loss_list.append(loss)
     
+    print("loss", loss)
+    
     # 1에폭당 정확도 계산
     if i % iter_per_epoch == 0:
         train_acc = network.accuracy(x_train, t_train)
@@ -51,6 +55,8 @@ for i in range(iters_num):
         train_acc_list.append(train_acc)
         test_acc_list.append(test_acc)
         print("train acc, test acc | " + str(train_acc) + ", " + str(test_acc))
+    
+    
 
 # 그래프 그리기
 markers = {'train': 'o', 'test': 's'}
